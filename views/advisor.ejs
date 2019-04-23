@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pathways</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(".accordion").accordion({
+                autoHeight: false,
+                heightStyle: "content",
+                active: false,
+                collapsible: true
+            });
+            $("#tabs").tabs();
+        });
+
+    </script>
+</head>
+<body>
+  <div class="accordion">
+    <%database[0].advisors.forEach(function(advisor){%>
+    <h3>
+            <%=advisor.name%>
+    </h3>
+    
+    <div>
+            <em>
+            <ul>
+              <li>Phone: <%=advisor.phone%></li>
+              <li>Email: <%=advisor.email%></li>
+              <li>Title: <%=advisor.title%></li>
+            </ul>
+            </em>
+          </div>
+          
+    <% }); %>
+      
+  </div>
+
+</body>
+</html>

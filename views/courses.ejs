@@ -1,0 +1,181 @@
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".accordion").accordion({
+                autoHeight: false,
+                heightStyle: "content",
+                active: false,
+                collapsible: true,
+                animat: false
+            });
+            $("#tabs").tabs();
+        });
+    </script>
+
+    <title>Course List</title>
+  
+</head>
+
+<body>
+    <%let emptyCourses = true;%>
+    <div id="tabs">
+        <ul>
+          <% if(semester.fall.length > 0) { %>
+              <li><a href="#fall">Fall</a></li>
+            <%emptyCourses = false;%>
+          <% } %>
+          
+          <% if(semester.spring.length > 0) { %>
+              <li><a href="#spring">Spring</a></li>
+            <%emptyCourses = false;%>
+          <% } %>
+          
+          <% if(semester.summer.length > 0) { %>
+              <li><a href="#summer">Summer</a></li>
+            <%emptyCourses = false;%>
+          <% } %>
+        </ul>
+      
+        <div id="fall">
+              <div class="accordion">
+                
+                <% semester.fall.forEach(function (course) { %>
+
+                  <h3><%= course.subject + " " + course.number + " - " + course.title + ", Section " + course.section  %></h3>
+                
+                  <div>
+                    <ul>
+                    <% course.realTimes.forEach(t => { %>
+                      
+                       <li>Instructor : 
+                         <%= t.instructor %> </li>
+                       <li>Building / Room :
+                         <%= t.buildingAndRoom %> </li>
+                       <li>Dates : 
+                         <%= t.dates %>           </li>
+                       <li>Days :
+                         <%= t.days %>            </li> 
+                       <li>Time : 
+                         <%= t.time %>            </li>
+                       <hr>
+                      
+                    <% }); %>
+                    
+                          <li> Course ID : <%= course.courseID %> </li>
+                          <li> Credits :   <%= course.credits  %> </li>
+                          <li>    <a href="<%= course.url %>" target="_blank">Visit Course on the official website</a> </li>
+                    </ul>
+                  
+                          
+                        </div>
+                        <% }) %>
+              </div>
+        </div>
+
+        <div id="spring">
+            <div class="accordion">
+               
+                    <% semester.spring.forEach(function (course) { %>
+                        
+                        <h3>
+                            <%= course.subject + " " + course.number + " - " + course.title + ", Section " + course.section  %>
+                        </h3>
+              
+              
+              
+                  <div>                            
+                    <ul>
+                    <% course.realTimes.forEach(t => { %>
+                      
+                       <li>Instructor : 
+                         <%= t.instructor %> </li>
+                       <li>Building / Room :
+                         <%= t.buildingAndRoom %> </li>
+                       <li>Dates : 
+                         <%= t.dates %>           </li>
+                       <li>Days :
+                         <%= t.days %>            </li> 
+                       <li>Time : 
+                         <%= t.time %>            </li>
+                       <hr>
+                      
+                    <% }); %>
+                          
+                      <li> Course ID : <%= course.courseID %> </li>
+                      <li> Credits :   <%= course.credits  %> </li>
+                      <li>    <a href="<%= course.url %>" target="_blank">Visit Course on the official website</a>  </li>
+                    </ul>
+                                              
+                        </div>
+                        <% }) %>      
+            </div>
+        </div>
+
+        <div id="summer">
+            <div class="accordion">
+
+                    <% semester.summer.forEach(function (course) { %>
+
+                        <h3>
+                            <%= course.subject + " " + course.number + " - " + course.title + ", Section " + course.section  %>
+                        </h3>
+                       
+                  <div>    
+                    <ul>
+                    <% course.realTimes.forEach(t => { %>
+                      
+                       <li>Instructor : 
+                         <%= t.instructor %> </li>
+                       <li>Building / Room :
+                         <%= t.buildingAndRoom %> </li>
+                       <li>Dates : 
+                         <%= t.dates %>           </li>
+                       <li>Days :
+                         <%= t.days %>            </li> 
+                       <li>Time : 
+                         <%= t.time %>            </li>
+                       <hr>
+                      
+                    <% }); %>
+          
+                      <li> Course ID : <%= course.courseID %> </li>
+                      <li> Credits :   <%= course.credits  %> </li>
+                      <li>    <a href="<%= course.url      %>" target="_blank">Visit Course on the official website</a>  </li>
+                    </ul>
+                          
+                        </div>
+                        <% }) %>
+                </div>           
+        </div>
+      
+    <!-- Messages if course information is not found -->
+    <div>
+      <% if(emptyCourses) {%> 
+          <h5>
+            <!-- getCourseByID - No teacher name --> 
+            <% if(teachername === "" && coursename !== ""){%>
+                  <%= coursename%> is not currently being offered.
+              <% } else { %>
+            No courses found for that subject teacher combination.
+            <% } %>
+           
+            
+            
+            
+          
+          </h5>
+          <% } %>
+    </div>
+      
+    </div>
+  
+ 
+
+</body>
+
+</html>
