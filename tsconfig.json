@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "commonjs",
+    "types": ["node"], 
     "allowJs": true,
     "checkJs": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
     "outDir": "./built"
   },
   "include": [

@@ -61,3 +61,10 @@ Facebook and dialogFlow use the same webhook, all webhook requests handlers shou
 DialogFlow represents the conversation topic as a finite state machine that slot fills, getting rid of slots when logical.
 Completely different topics are different finite state machines, and thus get rid of the context when switching between them.
 FAQ questions can be asked at any time and don't break out of the state machine, or change any context information.
+
+
+# typescript
+
+we are moving to typescript
+run `tsc` in console to transpile to JS.
+type `refresh` in console to refresh files in glitch.

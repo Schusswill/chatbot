@@ -1,3 +1,4 @@
+
 "use strict";
 
 let semestertimes = require("../datatype/starttimes");
