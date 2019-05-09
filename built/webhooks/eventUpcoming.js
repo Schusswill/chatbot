@@ -34,14 +34,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+var date_fns_1 = require("date-fns");
 module.exports = function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var getEventUpcoming, timeResponse;
+        var getEventUpcoming, timeResponse, startDate;
         return __generator(this, function (_a) {
             getEventUpcoming = require("../database/eventUpcoming");
             timeResponse = Number(req.query.timeResponse);
-            getEventUpcoming(timeResponse).then(function (e) {
-                //console.log(e);
+            startDate = date_fns_1.parse(req.query.startDate);
+            getEventUpcoming(startDate, timeResponse).then(function (e) {
                 res.render("../views/eventUpcoming.ejs", { event: e });
             });
             return [2 /*return*/];

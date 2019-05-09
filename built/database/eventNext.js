@@ -37,26 +37,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 //used from date-fns
 var date_fns_1 = require("date-fns");
-var date_fns_2 = require("date-fns");
-var date_fns_3 = require("date-fns");
 var Event = require('../model/event');
-//import * as date-fns from 'date-fns';
-//import * as Event from '../model/event';
-//const datefns = require("date-fns");
-//const Event = require("../model/event");
 module.exports = function () {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, Event.find().then(function (calendarevents) {
                     var todayDate = new Date();
-                    var filterevents = calendarevents.filter(function (e) {
-                        var parseddate = date_fns_1.parse(e.date);
-                        return date_fns_3.isAfter(parseddate, todayDate);
+                    //Filter array to only include future dates.
+                    var filterevents = calendarevents.filter(function (event) {
+                        var parseddate = date_fns_1.parse(event.date);
+                        return date_fns_1.isAfter(parseddate, todayDate);
                     });
-                    var datesFromFilter = filterevents.map(function (e) {
-                        return date_fns_1.parse(e.date);
+                    //Grab the dates from the events.
+                    var datesFromFilter = filterevents.map(function (event) {
+                        return date_fns_1.parse(event.date);
                     });
-                    var closestIndex = date_fns_2.closestIndexTo(todayDate, datesFromFilter);
+                    //find the index of the closest upcoming event
+                    var closestIndex = date_fns_1.closestIndexTo(todayDate, datesFromFilter);
                     return filterevents[closestIndex];
                 })];
         });

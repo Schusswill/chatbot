@@ -1,5 +1,5 @@
+"use strict";
 // !! schema is incomplete !!
-'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 var CourseSchema = new mongoose.Schema({

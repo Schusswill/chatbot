@@ -35,16 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var request = require('request');
-module.exports = function (facebookid, teachername) {
+module.exports = function (facebookid, messagetxt, qr0, qr1) {
     return __awaiter(this, void 0, void 0, function () {
-        function makeQuickReplies(title, payload) {
-            return {
-                "content_type": "text",
-                "title": title,
-                "payload": payload,
-            };
-        }
-        var url, token, body, options, quickList;
+        var url, token, body, options;
         return __generator(this, function (_a) {
             url = "https://graph.facebook.com/v2.6/me/messages?access_token=";
             token = process.env.FACEBOOK_TOKEN;
@@ -54,17 +47,17 @@ module.exports = function (facebookid, teachername) {
                     "id": facebookid
                 },
                 "message": {
-                    "text": "do you want to keep using " + teachername + " in future searches?",
+                    "text": messagetxt,
                     "quick_replies": [
                         {
-                            "content_type": "text",
-                            "title": "yes",
-                            "payload": "yes",
+                            content_type: "text",
+                            title: qr0,
+                            payload: qr0
                         },
                         {
                             content_type: "text",
-                            title: "no",
-                            payload: "no",
+                            title: qr1,
+                            payload: qr1
                         }
                     ]
                 }
@@ -74,10 +67,14 @@ module.exports = function (facebookid, teachername) {
                 method: 'POST',
                 json: body
             };
-            quickList = [];
-            request(options, function (error, response, body) {
-                console.log(body);
-            });
+            //   function makeQuickReplies(title, payload){
+            //     return{
+            //       "content_type": "text",
+            //       "title": title,
+            //       "payload": payload,
+            //     }
+            //   }
+            request(options);
             return [2 /*return*/];
         });
     });

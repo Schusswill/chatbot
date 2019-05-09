@@ -1,6 +1,3 @@
-'use strict';
-
-//let mongoose = require('mongoose');
 import * as mongoose from 'mongoose';
 
 var EventSchema = new mongoose.Schema({

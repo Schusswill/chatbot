@@ -34,12 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-module.exports = function (req, res) {
+//returns the closest event to todays date
+module.exports = function (res) {
     return __awaiter(this, void 0, void 0, function () {
-        var reply;
         return __generator(this, function (_a) {
-            reply = require('../database/eventNext')().then(function (reply) {
+            require('../database/eventNext')().then(function (reply) {
                 res.status(200).json({
                     fulfillmentText: reply.date + " " +
                         reply.time + "\n" +

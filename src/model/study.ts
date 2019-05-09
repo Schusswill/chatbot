@@ -1,8 +1,5 @@
 // !! schema is incomplete !!
 
-'use strict';
-
-
 import * as mongoose from 'mongoose';
 
 

@@ -1,14 +1,11 @@
-"use strict";
-
-
 module.exports = async function(req, res) {
-  
+
   const getFlowCourses = require("../database/flowCourses");
   
-  let abbrev    = req.query.subject;   //like subject, but directly sent by facebook. IE, CSCI etc,
-  let courses   = req.query.courses;
-  let firstname = req.query.firstname;
-  let lastname  = req.query.lastname;
+  let abbrev:    string   = req.query.subject;   //like subject, but directly sent by facebook. IE, CSCI etc,
+  let courses:   string   = req.query.courses;
+  let firstname: string   = req.query.firstname;
+  let lastname:  string   = req.query.lastname;
   
   // console.log(req.query);
   let fullname  = '';
@@ -22,9 +19,9 @@ module.exports = async function(req, res) {
   }
   
   
-  getFlowCourses(abbrev, courses, fullname).then(classes => {
+  getFlowCourses(abbrev, courses, fullname).then((classes: any) => {
      return require('../helper/seperateSemesters.js')(classes);
-  }).then(semesterStruct => {
+  }).then((semesterStruct: any) => {
   res.render("../views/courses.ejs", {semester: semesterStruct,
                                       coursename: courses,
                                       teachername: firstname + " " + lastname});

@@ -1,32 +1,30 @@
-"use strict";
-
-
 const request = require('request');
 
-module.exports = async function(facebookid, teachername) { 
+module.exports = async function(facebookid : number, messagetxt : string, qr0 : string, qr1: string) { 
   const url   = "https://graph.facebook.com/v2.6/me/messages?access_token=";
   const token = process.env.FACEBOOK_TOKEN;
+  // let quickreplies = []
   
-   let body = { 
+  let body = { 
       "messaging_type": "RESPONSE",
       "recipient": {
         "id": facebookid 
       },
       "message": {
-        "text": "do you want to keep using " + teachername + " in future searches?",
+        "text": messagetxt,
         
         "quick_replies":[
           {
-          "content_type":"text",
-          "title":"yes",
-          "payload":"yes",
+            content_type:"text",
+            title:qr0,
+            payload:qr0
           },
           {
             content_type:"text",
-            title:"no",
-            payload:"no",
+            title:qr1,
+            payload:qr1
           }
-      ]
+          ]
       }  
     }
    
@@ -36,20 +34,22 @@ module.exports = async function(facebookid, teachername) {
       json: body
     };
  
-  let quickList = [];
   
-  function makeQuickReplies(title, payload){
-    return{
-      "content_type": "text",
-      "title": title,
-      "payload": payload,
-    }
+//   function makeQuickReplies(title, payload){
+//     return{
+//       "content_type": "text",
+//       "title": title,
+//       "payload": payload,
+//     }
     
-  }
+//   }
 
   
+  request(options);
+  /*
   request(options, function (error, response, body) {
   console.log(body);
   });
+  */
   
 }

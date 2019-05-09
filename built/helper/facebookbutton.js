@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 //Max of three buttons possible
 /*
 *generates a button for facebook

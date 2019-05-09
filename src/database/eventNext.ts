@@ -1,16 +1,7 @@
-"use strict";
-
 //used from date-fns
-import {parse} from 'date-fns';
-import {closestIndexTo} from 'date-fns';
-import {isAfter} from 'date-fns';
+import {parse, closestIndexTo, isAfter} from 'date-fns';
 
 let Event = require('../model/event');
-
-//import * as date-fns from 'date-fns';
-//import * as Event from '../model/event';
-//const datefns = require("date-fns");
-//const Event = require("../model/event");
 
 module.exports = async function(){
   
@@ -18,17 +9,18 @@ module.exports = async function(){
     
     let todayDate = new Date();
     
-    let filterevents = calendarevents.filter( e => {
-      
-      let parseddate = parse(e.date);
+    //Filter array to only include future dates.
+    let filterevents = calendarevents.filter( event => {
+      let parseddate = parse(event.date);
       return isAfter(parseddate, todayDate);
-      
     });
     
-    let datesFromFilter = filterevents.map( e => {
-      return parse(e.date);
+    //Grab the dates from the events.
+    let datesFromFilter = filterevents.map( event => {
+      return parse(event.date);
     });  
     
+    //find the index of the closest upcoming event
     let closestIndex = closestIndexTo(todayDate, datesFromFilter);
     
     return filterevents[closestIndex];

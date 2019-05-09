@@ -1,16 +1,13 @@
-"use strict";
-
-
 //seperates semesters by term
 //returns courseBySemester
 
 module.exports = function(courselist) {
   
   
-  let courseBySemester = {
-        fall   : [],
-        spring : [],
-        summer : []
+  let courseBySemester: {fall: any[], spring: any[], summer: any[]} = {
+        fall: [],
+        spring: [],
+        summer: []
   }  
   
   courselist.forEach(course => {

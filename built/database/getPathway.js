@@ -34,18 +34,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var Pathway = require('../model/pathway');
+var Program = require('../model/program');
 //if empty, return everything. 
 module.exports = function (pathway) {
     if (pathway === void 0) { pathway = ""; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             if (pathway === "") {
-                return [2 /*return*/, Pathway.find().populate(["programs advisors"])];
+                return [2 /*return*/, Pathway.find().populate(["programs"])];
             }
             else {
-                return [2 /*return*/, Pathway.find({ pathway: pathway }).populate(["programs advisors"])];
+                return [2 /*return*/, Pathway.find({ pathway: pathway }).populate(["programs"])];
             }
             return [2 /*return*/];
         });

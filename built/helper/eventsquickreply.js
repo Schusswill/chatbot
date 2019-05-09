@@ -35,18 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//const request = require('request');
 var request = require("request");
+/*
+ *description: prompts quickreply with options: One Week, One Month, or Three Months
+ *        -used hand-to-hand with DialogFlow events.upcoming - week, month, 3months
+ */
 module.exports = function (facebookid) {
     return __awaiter(this, void 0, void 0, function () {
-        function makeQuickReplies(title, payload) {
-            return {
-                "content_type": "text",
-                "title": title,
-                "payload": payload
-            };
-        }
-        var url, token, body, options, quickList;
+        var url, token, body, options;
         return __generator(this, function (_a) {
             url = "https://graph.facebook.com/v2.6/me/messages?access_token=";
             token = process.env.FACEBOOK_TOKEN;
@@ -81,10 +77,7 @@ module.exports = function (facebookid) {
                 method: 'POST',
                 json: body
             };
-            quickList = [];
-            request(options, function (error, response, body) {
-                //console.log(body);
-            });
+            request(options);
             return [2 /*return*/];
         });
     });

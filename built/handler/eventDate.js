@@ -35,58 +35,55 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var url_1 = require("url");
+//imported functions from date-fns
 var date_fns_1 = require("date-fns");
 module.exports = function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userContexts, contextNames, timeResponse, startDate, contexts, period, end, quantity, unit, fullurl, reply;
+        var givenDate;
         return __generator(this, function (_a) {
-            userContexts = req.body.queryResult.outputContexts;
-            contextNames = userContexts.filter(function (context) {
-                //filters out all the dead contexts
-                return context.hasOwnProperty('lifespanCount');
-            }).map(function (realContexts) {
-                //grabs only the context name
-                realContexts.name = realContexts.name.split("/");
-                return realContexts.name[realContexts.name.length - 1];
+            givenDate = req.body.queryResult.parameters.date;
+            require('../database/eventDate')(givenDate).then(function (events) {
+                var description = "";
+                //Multiple events:
+                if (events.length > 1) {
+                    //Same day
+                    if (date_fns_1.isSameDay(events[0].date, givenDate)) {
+                        description += "These are the events on that day:\n\n";
+                    }
+                    //Differant day
+                    else {
+                        var preface = "There are no events on that date.\n";
+                        var distance = date_fns_1.distanceInWords(givenDate, events[0].date);
+                        var relation = date_fns_1.isBefore(events[0].date, givenDate) ? "before" : "after";
+                        description += preface + "These are the closest events to that day, they are " + distance + " " + relation + ":\n\n";
+                    }
+                    //Single event:
+                }
+                else {
+                    //Same day
+                    if (date_fns_1.isSameDay(events[0].date, givenDate)) {
+                        description += "This is the event that day:\n\n";
+                    }
+                    //Differant day
+                    else {
+                        var preface = "There are no events on that date.\n";
+                        var distance = date_fns_1.distanceInWords(givenDate, events[0].date);
+                        var relation = date_fns_1.isBefore(events[0].date, givenDate) ? "before" : "after";
+                        description += preface + "This is the closest event to your day, it is " + distance + " " + relation + ":\n\n";
+                    }
+                }
+                //eventText = all the events in string format
+                var eventText = "";
+                events.forEach(function (event) {
+                    eventText += event.date + " " +
+                        event.time + "\n" +
+                        event.title + "\n" +
+                        event.link + "\n\n";
+                });
+                res.status(200).json({ fulfillmentText: description + eventText });
             });
-            timeResponse = 0;
-            startDate = new Date();
-            if (contextNames.includes("eventtimeresponseweek")) {
-                timeResponse = 7;
-            }
-            else if (contextNames.includes("eventtimeresponsemonth")) {
-                timeResponse = 30;
-            }
-            else if (contextNames.includes("eventtimeresponse3month")) {
-                timeResponse = 90;
-            }
-            else if (contextNames.includes("eventtimeresponse")) {
-                contexts = req.body.queryResult.outputContexts;
-                require('../helper/eventsquickreply')(contexts[contexts.length - 1].parameters.facebook_sender_id);
-            }
-            else if (contextNames.includes("eventinunit")) {
-                period = req.body.queryResult.parameters.dateperiod;
-                startDate = date_fns_1.parse(period.startDate);
-                end = date_fns_1.parse(period.endDate);
-                timeResponse = date_fns_1.differenceInCalendarDays(end, startDate);
-            }
-            else {
-                quantity = req.body.queryResult.parameters.number;
-                unit = req.body.queryResult.parameters.unit;
-                timeResponse = quantity * unit;
-            }
-            if (timeResponse === 0) { } //quickreply options 7, 30, or 90 have yet to be selected by user
-            else {
-                fullurl = new url_1.URL('views', process.env.SERVER_URI);
-                fullurl.searchParams.set('type', 'eventUpcoming');
-                fullurl.searchParams.set('timeResponse', timeResponse.toString());
-                fullurl.searchParams.set('startDate', startDate.toString());
-                reply = require('../helper/facebookbutton')(fullurl, 'Events');
-                res.status(200).json(reply);
-            }
             return [2 /*return*/];
         });
     });
 };
-//# sourceMappingURL=eventUpcoming.js.map
+//# sourceMappingURL=eventDate.js.map

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 
 import * as mongoose from 'mongoose';
@@ -15,3 +15,4 @@ var AdvisorSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model("Advisor", AdvisorSchema);
+*/

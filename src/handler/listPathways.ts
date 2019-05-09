@@ -2,14 +2,14 @@
 
 import {URL} from 'url';
 
-module.exports = async function(req, res) {
-  let fullurl = new URL('views',process.env.SERVER_URI);
-  fullurl.searchParams.set('type', 'listPathways');
-  
+module.exports = async function(res) {
+    
+ 
   require("../database/getPathway")().then(pathways => { 
-    let imgurls = [];
-    let pathwaynames = [];
-    let urls = [];
+    
+    let imgurls: Array<string> = [];
+    let pathwaynames: Array<string> = [];
+    let urls: Array<URL>  = [];
 
     pathways.forEach(pathway => {
 

@@ -1,10 +1,6 @@
-
-"use strict";
-
-let dateFns = require("date-fns");
-
 //yyyy/dd/m
-const y = [ 
+//remember month is 0 indexed, 12th month is 11th month.
+export const semestertimes = [ 
   {start: new Date(2018,7,15),
    end:   new Date(2018,11,19),
    semester: "Fall",
@@ -29,5 +25,3 @@ const y = [
   }
 ]
 
-
-module.exports = y;

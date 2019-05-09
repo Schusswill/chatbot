@@ -1,9 +1,7 @@
 // for mongoDB connection
-//let mongoose = require('mongoose');
 
 import * as mongoose from 'mongoose';
 
-//let Schema = mongoose.Schema;
 
 var CourseSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,

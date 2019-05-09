@@ -1,18 +1,7 @@
 // !! schema is incomplete !!
 
-'use strict';
-
-
+/*
 import * as mongoose from 'mongoose';
-
-
-var StudyContactSchema = new mongoose.Schema({
-  "name" : String,
-  "phone" : String,
-  "email" : String,
-  "title" : String
-});
-
 
 var StudySchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -22,9 +11,13 @@ var StudySchema = new mongoose.Schema({
   "program": String,
   "totalCredits": String,
   "description": String,
-  "contacts": [StudyContactSchema],
-  "url": String
+  "contacts": String,
+  "url": String,
+  "requirements" : [{
+      "requirementName" : String,
+      "requiredCourses" : [String]
+      }]
 });
 
-
-module.exports = mongoose.model("Study", StudySchema);
+//module.exports = mongoose.model("Study", StudySchema);
+*/

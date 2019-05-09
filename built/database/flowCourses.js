@@ -45,7 +45,7 @@ module.exports = function (subject, course, fullName) {
             if (course === void 0) { course = new RegExp("."); }
             if (fullName === void 0) { fullName = new RegExp("."); }
             var number = new RegExp(".");
-            if (course instanceof String) {
+            if (course instanceof String || typeof (course) === "string") {
                 var number2 = course.split("-")[1];
                 var subject2 = course.split("-")[0];
                 return Course.find({ 'realTimes.instructor': fullName, 'subject': subject2, number: number2 });

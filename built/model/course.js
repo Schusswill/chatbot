@@ -1,9 +1,7 @@
 "use strict";
 // for mongoDB connection
-//let mongoose = require('mongoose');
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
-//let Schema = mongoose.Schema;
 var CourseSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     courseID: Number,

@@ -1,6 +1,3 @@
-"use Strict"
-
-
 import {URL} from 'url';
 
 //TODO We will need to add the advisors to the database

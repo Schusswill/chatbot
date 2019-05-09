@@ -1,6 +1,3 @@
-'use strict';
-
-
 import * as mongoose from 'mongoose';
 
 
@@ -10,6 +7,7 @@ var ProgramContactSchema = new mongoose.Schema({
   "email" : String,
   "title" : String
 });
+
 
 var ProgramSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,

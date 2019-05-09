@@ -1,23 +1,24 @@
+"use strict";
 // !! schema is incomplete !!
-'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose = require("mongoose");
-var StudyContactSchema = new mongoose.Schema({
-    "name": String,
-    "phone": String,
-    "email": String,
-    "title": String
-});
+/*
+import * as mongoose from 'mongoose';
+
 var StudySchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    "study": String,
-    "type": String,
-    "pathway": String,
-    "program": String,
-    "totalCredits": String,
-    "description": String,
-    "contacts": [StudyContactSchema],
-    "url": String
+  _id: mongoose.Schema.Types.ObjectId,
+  "study": String,
+  "type": String,   //degree, certificate or diploma
+  "pathway": String,
+  "program": String,
+  "totalCredits": String,
+  "description": String,
+  "contacts": String,
+  "url": String,
+  "requirements" : [{
+      "requirementName" : String,
+      "requiredCourses" : [String]
+      }]
 });
-module.exports = mongoose.model("Study", StudySchema);
+
+//module.exports = mongoose.model("Study", StudySchema);
+*/
 //# sourceMappingURL=newstudy.js.map

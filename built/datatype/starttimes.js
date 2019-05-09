@@ -1,7 +1,8 @@
 "use strict";
-var dateFns = require("date-fns");
+Object.defineProperty(exports, "__esModule", { value: true });
 //yyyy/dd/m
-var y = [
+//remember month is 0 indexed, 12th month is 11th month.
+exports.semestertimes = [
     { start: new Date(2018, 7, 15),
         end: new Date(2018, 11, 19),
         semester: "Fall",
@@ -23,5 +24,4 @@ var y = [
         year: 2019
     }
 ];
-module.exports = y;
 //# sourceMappingURL=starttimes.js.map

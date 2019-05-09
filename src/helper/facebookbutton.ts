@@ -1,11 +1,9 @@
-"use strict";
-
-
+import {URL} from 'url';
 //Max of three buttons possible
 /*
 *generates a button for facebook
 */
-module.exports = function(fullurl, title = '', msgtext = "Click button to view " + title.toLowerCase()) { 
+module.exports = function(fullurl: URL, title: string = '', msgtext: string = "Click button to view " + title.toLowerCase()) { 
   // console.log("msg: " + msgtext);
   return  { 'fulfillmentMessages': [{
               "payload" : {

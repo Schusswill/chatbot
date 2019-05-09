@@ -35,25 +35,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//const datefns = require("date-fns");
-//const Event = require("../model/event");
-//import * as date-fns from 'date-fns';
-//import * as Event from '../model/event';
-//date-dns has no default export
+//imported functions from date-fns
 var date_fns_1 = require("date-fns");
-var date_fns_2 = require("date-fns");
 var Event = require('../model/event');
-module.exports = function (daysLater) {
+/*
+ * description: Returns all events within a certain startDate and endDate
+ * @param     : daysLater = 7, 30, 90, or any number
+ * @return    : all the evens from the startDate to the endDate
+ */
+module.exports = function (startDate, daysLater) {
     return __awaiter(this, void 0, void 0, function () {
-        var todayDate, laterDate;
         return __generator(this, function (_a) {
-            todayDate = new Date();
-            laterDate = date_fns_1.addDays(todayDate, daysLater);
             return [2 /*return*/, Event.find().then(function (calendarevent) {
-                    var todayDate = new Date();
-                    var laterDate = date_fns_1.addDays(todayDate, daysLater);
-                    return calendarevent.filter(function (e) {
-                        return date_fns_2.isWithinRange(e.date, todayDate, laterDate);
+                    var laterDate = date_fns_1.addDays(startDate, daysLater);
+                    return calendarevent.filter(function (events) {
+                        return date_fns_1.isWithinRange(events.date, startDate, laterDate);
                     });
                 })];
         });

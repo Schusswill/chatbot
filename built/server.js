@@ -1,3 +1,4 @@
+"use strict";
 // where your node app starts
 // init project
 var express = require('express');

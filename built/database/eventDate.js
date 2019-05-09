@@ -35,58 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var url_1 = require("url");
+//imported functions from date-fns
 var date_fns_1 = require("date-fns");
-module.exports = function (req, res) {
+var Event = require('../model/event');
+module.exports = function (givenDate) {
     return __awaiter(this, void 0, void 0, function () {
-        var userContexts, contextNames, timeResponse, startDate, contexts, period, end, quantity, unit, fullurl, reply;
         return __generator(this, function (_a) {
-            userContexts = req.body.queryResult.outputContexts;
-            contextNames = userContexts.filter(function (context) {
-                //filters out all the dead contexts
-                return context.hasOwnProperty('lifespanCount');
-            }).map(function (realContexts) {
-                //grabs only the context name
-                realContexts.name = realContexts.name.split("/");
-                return realContexts.name[realContexts.name.length - 1];
-            });
-            timeResponse = 0;
-            startDate = new Date();
-            if (contextNames.includes("eventtimeresponseweek")) {
-                timeResponse = 7;
-            }
-            else if (contextNames.includes("eventtimeresponsemonth")) {
-                timeResponse = 30;
-            }
-            else if (contextNames.includes("eventtimeresponse3month")) {
-                timeResponse = 90;
-            }
-            else if (contextNames.includes("eventtimeresponse")) {
-                contexts = req.body.queryResult.outputContexts;
-                require('../helper/eventsquickreply')(contexts[contexts.length - 1].parameters.facebook_sender_id);
-            }
-            else if (contextNames.includes("eventinunit")) {
-                period = req.body.queryResult.parameters.dateperiod;
-                startDate = date_fns_1.parse(period.startDate);
-                end = date_fns_1.parse(period.endDate);
-                timeResponse = date_fns_1.differenceInCalendarDays(end, startDate);
-            }
-            else {
-                quantity = req.body.queryResult.parameters.number;
-                unit = req.body.queryResult.parameters.unit;
-                timeResponse = quantity * unit;
-            }
-            if (timeResponse === 0) { } //quickreply options 7, 30, or 90 have yet to be selected by user
-            else {
-                fullurl = new url_1.URL('views', process.env.SERVER_URI);
-                fullurl.searchParams.set('type', 'eventUpcoming');
-                fullurl.searchParams.set('timeResponse', timeResponse.toString());
-                fullurl.searchParams.set('startDate', startDate.toString());
-                reply = require('../helper/facebookbutton')(fullurl, 'Events');
-                res.status(200).json(reply);
-            }
-            return [2 /*return*/];
+            return [2 /*return*/, Event.find().then(function (calendarEvents) {
+                    //convert database events.date from a string to date format
+                    var convertedDates = calendarEvents.map(function (e) {
+                        return date_fns_1.parse(e.date);
+                    });
+                    //sameEvents = all the events, if any, for the givenDate
+                    var sameEvents = calendarEvents.filter(function (sd) {
+                        return date_fns_1.isSameDay(sd.date, givenDate);
+                    });
+                    //if no events for givenDate, return the closest events before or after givenDate
+                    if (sameEvents.length === 0) {
+                        //let closestEvents: Array<any> = [];
+                        var closestDate_1 = calendarEvents[date_fns_1.closestIndexTo(givenDate, convertedDates)].date;
+                        return calendarEvents.filter(function (cd) {
+                            return date_fns_1.isSameDay(cd.date, closestDate_1);
+                        });
+                    }
+                    else {
+                        return sameEvents;
+                    }
+                })];
         });
     });
 };
-//# sourceMappingURL=eventUpcoming.js.map
+//# sourceMappingURL=eventDate.js.map

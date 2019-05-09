@@ -1,4 +1,7 @@
 "use strict";
+/*
+*William Schussler
+*/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -38,11 +41,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var url_1 = require("url");
 module.exports = function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var fullurl, params, contexts, msgtext, fullname, reply;
+        var fullurl, params, contexts, msgtext, fullname_1, reply, activecontexts;
         return __generator(this, function (_a) {
             fullurl = new url_1.URL('views', process.env.SERVER_URI);
             params = req.body.queryResult.parameters;
             contexts = req.body.queryResult.outputContexts;
+            // console.log("req:");
+            // console.log(req.body);
+            // console.log("contexts:");
+            // console.log(contexts);
             fullurl.searchParams.set('type', 'flowCourse');
             fullurl.searchParams.set('subject', params.subject);
             fullurl.searchParams.set('courses', params.courses);
@@ -53,40 +60,42 @@ module.exports = function (req, res) {
                 params.lName === '' &&
                 params.fName === '') {
                 res.status(200).json({ fulfillmentText: "You can ask me about courses, based on teacher name, course name, subject, and class id" });
-                return [2 /*return*/, undefined]; //early exit
-            }
-            msgtext = "click the button to view ";
-            fullname = "";
-            if (params.fName === "" || params.lName === "") { }
-            else {
-                fullname = params.fName + " " + params.lName;
-            }
-            if (params.subject === "") {
-                if (!(params.courses === '') && fullname === "") {
-                    msgtext += params.courses + " sections offered";
-                }
-                if (params.courses === '' && !(fullname === "")) {
-                    msgtext += "the courses " + fullname + " teaches";
-                }
-                if (!(params.courses === '') && !(fullname === "")) {
-                    msgtext += params.courses + " sections " + fullname + " teaches";
-                }
             }
             else {
-                if (params.courses === '' && fullname === "") {
-                    msgtext += params.subject + " courses";
+                msgtext = "click the button to view ";
+                fullname_1 = "";
+                if (params.fName === "" || params.lName === "") { }
+                else {
+                    fullname_1 = params.fName + " " + params.lName;
                 }
-                if (params.courses === '' && !(fullname === "")) {
-                    msgtext += params.subject + " courses that " + fullname + " teaches";
+                if (params.subject === "") {
+                    if (!(params.courses === '') && fullname_1 === "") {
+                        msgtext += params.courses + " sections offered";
+                    }
+                    if (params.courses === '' && !(fullname_1 === "")) {
+                        msgtext += "the courses " + fullname_1 + " teaches";
+                    }
+                    if (!(params.courses === '') && !(fullname_1 === "")) {
+                        msgtext += params.courses + " sections " + fullname_1 + " teaches";
+                    }
                 }
-            }
-            reply = require('../helper/facebookbutton')(fullurl, 'courses', msgtext);
-            //send facebook button
-            res.status(200).json(reply);
-            //test if teacher name was last param added, if it is send the user a quickreply to ask if they want to keep the prof as a param
-            if (contexts.filter(function (context) { return context.name.includes('getcourse-name-contex'); }).length > 0) {
-                //after 2 seconds send the quick reply to the user
-                setTimeout(function () { require('../helper/facebookquickreply')(contexts[contexts.length - 1].parameters.facebook_sender_id + "", params.fName + ", " + params.lName); }, 2000);
+                else {
+                    if (params.courses === '' && fullname_1 === "") {
+                        msgtext += params.subject + " courses";
+                    }
+                    if (params.courses === '' && !(fullname_1 === "")) {
+                        msgtext += params.subject + " courses that " + fullname_1 + " teaches";
+                    }
+                }
+                reply = require('../helper/facebookbutton')(fullurl, 'courses', msgtext);
+                //send facebook button
+                res.status(200).json(reply);
+                activecontexts = contexts.filter(function (context) { return context.hasOwnProperty('lifespanCount'); });
+                if (activecontexts.filter(function (context) { return context.name.includes("getcourse-name-contex"); }).length > 0) {
+                    setTimeout(function () {
+                        require('../helper/facebookquickreply')(contexts[contexts.length - 1].parameters.facebook_sender_id, "Do you want to continue using " + fullname_1 + " in future seaches?", "yes", "no");
+                    }, 2000);
+                }
             }
             return [2 /*return*/];
         });

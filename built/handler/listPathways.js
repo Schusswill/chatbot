@@ -36,12 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var url_1 = require("url");
-module.exports = function (req, res) {
+module.exports = function (res) {
     return __awaiter(this, void 0, void 0, function () {
-        var fullurl;
         return __generator(this, function (_a) {
-            fullurl = new url_1.URL('views', process.env.SERVER_URI);
-            fullurl.searchParams.set('type', 'listPathways');
             require("../database/getPathway")().then(function (pathways) {
                 var imgurls = [];
                 var pathwaynames = [];

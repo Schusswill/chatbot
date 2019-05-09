@@ -1,11 +1,12 @@
-
-"use strict";
-
-let semestertimes = require("../datatype/starttimes");
-let dateFns = require("date-fns");
-
+import {semestertimes} from "../datatype/starttimes"; 
 
 module.exports = function() {
+  
+  //let semestertimes = require("../datatype/starttimes");
+  
+  
+  
+  let dateFns = require("date-fns");
   
   let currentDate = Date();
   

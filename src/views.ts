@@ -1,7 +1,5 @@
 // Renders HTML pages when facebook user presses button
 
-"use strict";
-
 const querystring = require('querystring');
 
 module.exports = function(req, res) {

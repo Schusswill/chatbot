@@ -1,13 +1,11 @@
-"use strict";
-
-
-//const request = require('request');
-
 import * as request from 'request';
 
-module.exports = async function(facebookid) { 
+/*
+ *description: prompts quickreply with options: One Week, One Month, or Three Months
+ *        -used hand-to-hand with DialogFlow events.upcoming - week, month, 3months
+ */
+module.exports = async function(facebookid: number) { 
   const url   = "https://graph.facebook.com/v2.6/me/messages?access_token=";
-  //const token = "EAAEZARZBdvZCLsBAGmMMaRXlSuUEBvrSMz8uM9vApVtYgR16rjhzXFyx6WvWgL4mK5HQG9cDas7QDVwmKJTmN0SWQ44Xj8slTZBNQGcuDVAmFIBzvGJXoLUnxUKxjzjKpKQyO85CugWZA1SiSJ4NrnG6ENZCild4GgHFaeeforswZDZD";
   const token = process.env.FACEBOOK_TOKEN;
   
    let body = { 
@@ -44,20 +42,13 @@ module.exports = async function(facebookid) {
       json: body
     };
  
-  let quickList = [];
-  
-  function makeQuickReplies(title, payload){
-    return{
-      "content_type": "text",
-      "title": title,
-      "payload": payload
-    }
-    
-  }
 
+  request(options);
   
+  /*
   request(options, function (error, response, body) {
-  //console.log(body);
+  console.log(body);
   });
+  */
   
 }
