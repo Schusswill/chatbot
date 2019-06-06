@@ -17,4 +17,3 @@ var AdvisorSchema = new mongoose.Schema({
 
 module.exports = mongoose.model("Advisor", AdvisorSchema);
 */
-//# sourceMappingURL=advisor.js.map

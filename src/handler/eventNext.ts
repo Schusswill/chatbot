@@ -1,4 +1,5 @@
 //returns the closest event to todays date
+//returns only one event from that date
 module.exports = async function(res) { 
   require('../database/eventNext')().then(reply => {
     

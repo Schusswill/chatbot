@@ -4,21 +4,21 @@
 
 import {URL} from 'url';
 
-module.exports = async function(req, res) {
-  //console.log(req.body.result.contexts[0]);
+module.exports = async function(body, res) {
+  //console.log(body.result.contexts[0]);
 
   
   let fullurl:URL = new URL('views', process.env.SERVER_URI);
   
-  let params = req.body.queryResult.parameters;
-  let contexts = req.body.queryResult.outputContexts;
+  let params   = body.queryResult.parameters;
+  let contexts = body.queryResult.outputContexts;
  
   // console.log("req:");
-  // console.log(req.body);
+  // console.log(body);
   // console.log("contexts:");
   // console.log(contexts);
   
-  fullurl.searchParams.set('type', 'flowCourse');
+  fullurl.searchParams.set('type',      'flowCourse');
   fullurl.searchParams.set('subject', params.subject);
   fullurl.searchParams.set('courses', params.courses);
   fullurl.searchParams.set('lastname',  params.lName);

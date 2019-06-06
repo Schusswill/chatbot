@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /*
 *generates a button for facebook
 */
-module.exports = function (fullurl, title, msgtext) {
-    if (title === void 0) { title = ''; }
-    if (msgtext === void 0) { msgtext = "Click button to view " + title.toLowerCase(); }
+module.exports = function (fullurl, title = '', msgtext = "Click button to view " + title.toLowerCase()) {
     // console.log("msg: " + msgtext);
     return { 'fulfillmentMessages': [{
                 "payload": {
@@ -30,4 +28,3 @@ module.exports = function (fullurl, title, msgtext) {
             }]
     };
 };
-//# sourceMappingURL=facebookbutton.js.map

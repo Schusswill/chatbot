@@ -1,7 +1,7 @@
 "use strict";
 // !! schema is incomplete !!
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var CourseSchema = new mongoose.Schema({
     courseID: Number,
     subject: String,
@@ -19,4 +19,3 @@ var StudySchema = new mongoose.Schema({
     "url": String
 });
 module.exports = mongoose.model("Study", StudySchema);
-//# sourceMappingURL=study.js.map

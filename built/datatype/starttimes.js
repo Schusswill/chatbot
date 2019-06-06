@@ -24,4 +24,3 @@ exports.semestertimes = [
         year: 2019
     }
 ];
-//# sourceMappingURL=starttimes.js.map

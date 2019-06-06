@@ -1,8 +1,8 @@
 //imported functions from date-fns
 import {isBefore, isSameDay, distanceInWords} from 'date-fns';
 
-module.exports = async function(req, res) { 
-  let givenDate = req.body.queryResult.parameters.date;
+module.exports = async function(body, res) { 
+  let givenDate = body.queryResult.parameters.date;
   
   require('../database/eventDate')(givenDate).then(events => {
     
@@ -34,13 +34,12 @@ module.exports = async function(req, res) {
       
       //Differant day
       else{
-        let preface = "There are no events on that date.\n";
+        let preface  = "There are no events on that date.\n";
         let distance = distanceInWords(givenDate, events[0].date);
         let relation = isBefore(events[0].date, givenDate) ? "before" : "after";
         description += preface + "This is the closest event to your day, it is " + distance + " " + relation + ":\n\n";
-    }
-      
-      
+      }
+  
     }
     
     //eventText = all the events in string format

@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
-    "types": ["node"], 
+    "types": ["node"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowJs": false,
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    //"strictPropertyInitialization": true, //off for typeorm entities
     "strictBindCallApply": true,
     "noImplicitThis": true,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "sourceMap": true,
+    //"noUnusedParameters": true, //off for typeorm entity decorators
+    "sourceMap": false,
     "moduleResolution": "node",
     "outDir": "./built"
   },

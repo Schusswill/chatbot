@@ -1,8 +1,8 @@
 "use strict";
 // Renders HTML pages when facebook user presses button
-var querystring = require('querystring');
+const querystring = require('querystring');
 module.exports = function (req, res) {
-    var type = req.query.type;
+    let type = req.query.type;
     console.log("views: ");
     console.log(type);
     switch (type) {
@@ -20,4 +20,3 @@ module.exports = function (req, res) {
             break;
     }
 };
-//# sourceMappingURL=views.js.map

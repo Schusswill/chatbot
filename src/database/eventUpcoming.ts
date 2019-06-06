@@ -4,9 +4,9 @@ import {addDays, isWithinRange} from 'date-fns';
 let Event = require('../model/event');
 
 /*
- * description: Returns all events within a certain startDate and endDate
- * @param     : daysLater = 7, 30, 90, or any number
- * @return    : all the evens from the startDate to the endDate
+ * description: Returns all events from startDate to daysLater
+ * @param     : startDate= beginning date, daysLater= days of a month or day range
+ * @return    : all the events from the startDate to the daysLater
  */
 module.exports = async function(startDate, daysLater){
   

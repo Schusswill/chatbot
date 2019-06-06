@@ -1,17 +1,7 @@
-"use strict";
-
 //imported functions from date-fns
 import {isSameDay, closestIndexTo, parse} from 'date-fns';
 
 let Event = require('../model/event');
-
-//testing interface https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
-interface Event {
-    link: string;
-    date: string;
-    title: string;
-    time: string;
-}
 
 module.exports = async function(givenDate){
   
@@ -29,16 +19,17 @@ module.exports = async function(givenDate){
     
     //if no events for givenDate, return the closest events before or after givenDate
     if(sameEvents.length === 0){    
-      //let closestEvents: Array<any> = [];
       let closestDate = calendarEvents[closestIndexTo(givenDate, convertedDates)].date;
+      
       return calendarEvents.filter( cd => {
         return isSameDay(cd.date, closestDate);
       });
-
-
+      
+    //return multiple events if any on the givenDate
     }else{
       return sameEvents;
     }
   });
+  
 }
                           

@@ -1,7 +1,7 @@
 "use strict";
 // for mongoDB connection
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var CourseSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     courseID: Number,
@@ -39,4 +39,3 @@ var CourseSchema = new mongoose.Schema({
 });
 // export mongo schema
 module.exports = mongoose.model("Course", CourseSchema);
-//# sourceMappingURL=course.js.map

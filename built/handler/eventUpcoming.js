@@ -7,86 +7,74 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var url_1 = require("url");
-var date_fns_1 = require("date-fns");
-module.exports = function (req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var userContexts, contextNames, timeResponse, startDate, contexts, period, end, quantity, unit, fullurl, reply;
-        return __generator(this, function (_a) {
-            userContexts = req.body.queryResult.outputContexts;
-            contextNames = userContexts.filter(function (context) {
-                //filters out all the dead contexts
-                return context.hasOwnProperty('lifespanCount');
-            }).map(function (realContexts) {
-                //grabs only the context name
-                realContexts.name = realContexts.name.split("/");
-                return realContexts.name[realContexts.name.length - 1];
-            });
-            timeResponse = 0;
-            startDate = new Date();
-            if (contextNames.includes("eventtimeresponseweek")) {
-                timeResponse = 7;
-            }
-            else if (contextNames.includes("eventtimeresponsemonth")) {
-                timeResponse = 30;
-            }
-            else if (contextNames.includes("eventtimeresponse3month")) {
-                timeResponse = 90;
-            }
-            else if (contextNames.includes("eventtimeresponse")) {
-                contexts = req.body.queryResult.outputContexts;
-                require('../helper/eventsquickreply')(contexts[contexts.length - 1].parameters.facebook_sender_id);
-            }
-            else if (contextNames.includes("eventinunit")) {
-                period = req.body.queryResult.parameters.dateperiod;
-                startDate = date_fns_1.parse(period.startDate);
-                end = date_fns_1.parse(period.endDate);
+//imported functions from date-fns
+const date_fns_1 = require("date-fns");
+const url_1 = require("url");
+module.exports = function (body, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let userContexts = body.queryResult.outputContexts;
+        //Checks for the appropriate contexts from DialogFlow
+        let contextNames = userContexts.filter(context => {
+            //filters out all the dead contexts
+            return context.hasOwnProperty('lifespanCount');
+        }).map(realContexts => {
+            //grabs only the context name
+            realContexts.name = realContexts.name.split("/");
+            return realContexts.name[realContexts.name.length - 1];
+        });
+        //timeResponse represents number of days after the startDate to look for events
+        let timeResponse = 0;
+        //startDate is changed to a new date if a specific month is entered, but by default it is todays date
+        let startDate = new Date();
+        //If the user was looking for one week (from quickreply)
+        if (contextNames.includes("eventtimeresponseweek")) {
+            timeResponse = 7;
+        }
+        //If the user was looking for one month (from quickreply)
+        else if (contextNames.includes("eventtimeresponsemonth")) {
+            timeResponse = 30;
+        }
+        //If the user was looking for three months (from quickreply)
+        else if (contextNames.includes("eventtimeresponse3month")) {
+            timeResponse = 90;
+        }
+        //If the user asks for events, but does not specify a specific timeline
+        else if (contextNames.includes("eventtimeresponse")) {
+            //invoke quickreplies to user
+            let contexts = body.queryResult.outputContexts;
+            require('../helper/eventQuickReply')(contexts[contexts.length - 1].parameters.facebook_sender_id, "What timeline were you thinking", ["One Week", "One Month", "One Month"]);
+        }
+        //If the user is looking for a specific timeline
+        else if (contextNames.includes("eventinunit")) {
+            let period = body.queryResult.parameters.dateperiod;
+            startDate = date_fns_1.parse(period.startDate);
+            let end = date_fns_1.parse(period.endDate);
+            timeResponse = date_fns_1.differenceInCalendarDays(end, startDate);
+            //Kinda bad because it keeps you from asking about the next year
+            //Check for if dialogflow sends next year instead of this year
+            //hardcodes everything to the currennt year
+            if (!date_fns_1.isThisYear(startDate)) {
+                startDate = (date_fns_1.subYears(startDate, 1));
+                end = (date_fns_1.subYears(end, 1));
                 timeResponse = date_fns_1.differenceInCalendarDays(end, startDate);
             }
-            else {
-                quantity = req.body.queryResult.parameters.number;
-                unit = req.body.queryResult.parameters.unit;
-                timeResponse = quantity * unit;
-            }
-            if (timeResponse === 0) { } //quickreply options 7, 30, or 90 have yet to be selected by user
-            else {
-                fullurl = new url_1.URL('views', process.env.SERVER_URI);
-                fullurl.searchParams.set('type', 'eventUpcoming');
-                fullurl.searchParams.set('timeResponse', timeResponse.toString());
-                fullurl.searchParams.set('startDate', startDate.toString());
-                reply = require('../helper/facebookbutton')(fullurl, 'Events');
-                res.status(200).json(reply);
-            }
-            return [2 /*return*/];
-        });
+        }
+        //If the user is specifies (x, unit) to look for events
+        else {
+            //set timeResponse with given data from dialogFlow. ex: "Events in 2 weeks"
+            let quantity = body.queryResult.parameters.number;
+            let unit = body.queryResult.parameters.unit;
+            timeResponse = quantity * unit;
+        }
+        //Sends user courses
+        if (timeResponse !== 0) {
+            let fullurl = new url_1.URL('views', process.env.SERVER_URI);
+            fullurl.searchParams.set('type', 'eventUpcoming');
+            fullurl.searchParams.set('timeResponse', timeResponse.toString());
+            fullurl.searchParams.set('startDate', startDate.toString());
+            let reply = require('../helper/facebookbutton')(fullurl, 'Events');
+            res.status(200).json(reply);
+        }
     });
 };
-//# sourceMappingURL=eventUpcoming.js.map

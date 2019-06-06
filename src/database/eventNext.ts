@@ -3,6 +3,7 @@ import {parse, closestIndexTo, isAfter} from 'date-fns';
 
 let Event = require('../model/event');
 
+//returns closest event to current date
 module.exports = async function(){
   
   return Event.find().then(calendarevents => {

@@ -13,7 +13,7 @@ module.exports = function (titles, urls, image_urls) {
             }
         };
     }
-    var templatelist = [];
+    let templatelist = [];
     titles.forEach(function (title, index) {
         templatelist.push(makeTemplates(title, urls[index], image_urls[index]));
     });
@@ -33,4 +33,3 @@ module.exports = function (titles, urls, image_urls) {
             }]
     };
 };
-//# sourceMappingURL=facebookcarousel.js.map

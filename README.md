@@ -68,3 +68,12 @@ FAQ questions can be asked at any time and don't break out of the state machine,
 we are moving to typescript
 run `tsc` in console to transpile to JS.
 type `refresh` in console to refresh files in glitch.
+
+# typeorm
+
+There is trouble with ORMs in general, to use the set data type and various others, manual SQL queries will be used.
+
+
+# notes
+
+https://github.com/typeorm/typeorm/issues/235

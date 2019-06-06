@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var PathwaySchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     "pathway": String,
@@ -16,4 +16,3 @@ var PathwaySchema = new mongoose.Schema({
     "imgurl": String
 });
 module.exports = mongoose.model("Pathway", PathwaySchema);
-//# sourceMappingURL=pathway.js.map
